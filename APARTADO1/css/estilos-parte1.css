@@ -1,0 +1,55 @@
+body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial;
+        }
+        .bg {
+            background-image: url('https://elcomercio.pe/resizer/47_3y_NTW6NuQWrREfP5UyNRMwI=/640x0/smart/filters:format(jpeg):quality(75)/arc-anglerfish-arc2-prod-elcomercio.s3.amazonaws.com/public/3D6V7Y4BZVESFDETO72RCZ7YG4.jpg');
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: left;
+        }
+        .content {
+            padding: 20px;
+            width: 90%;
+        }
+
+        .text-box {
+            color: black;
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .content h1 {
+            padding-bottom: 50px;
+            font-weight: bold;
+        }
+
+        #current-date {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        #current-date:before {
+            content: '[';
+        }
+        
+        #current-date:after {
+            content: ']';
+        }
+
+        @media (max-width: 90%) {
+            .bg .form-control {
+                width: 100%;
+            }
+        }
