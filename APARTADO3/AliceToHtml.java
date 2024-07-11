@@ -14,15 +14,15 @@ public class AliceToHtml {
         String inputFile = "alice.txt";
         String outputFile = "alice.html";
 
-        List<String> textLines = readFile(inputFile);
-        int numLinesWithText = countNonEmptyLines(textLines);
-        String longestWord = findLongestWord(textLines);
+        List<String> textLines = leerLineas(inputFile);
+        int numeroLineas = contarLineas(textLines);
+        String palabraLarga = palabraMasLarga(textLines);
         List<Chapter> chapters = parseChapters(textLines);
 
-        writeHtml(outputFile, chapters, numLinesWithText, longestWord);
+        writeHtml(outputFile, chapters, numeroLineas, palabraLarga);
     }
 
-    public static List<String> readFile(String filePath) {
+    public static List<String> leerLineas(String filePath) {
         List<String> lines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -35,7 +35,7 @@ public class AliceToHtml {
         return lines;
     }
 
-    public static int countNonEmptyLines(List<String> lines) {
+    public static int contarLineas(List<String> lines) {
         int count = 0;
         for (String line : lines) {
             if (!line.trim().isEmpty()) {
@@ -45,19 +45,19 @@ public class AliceToHtml {
         return count;
     }
 
-    public static String findLongestWord(List<String> lines) {
-        String longestWord = "";
+    public static String palabraMasLarga(List<String> lines) {
+        String palabraLarga = "";
         Pattern pattern = Pattern.compile("\\b\\w+\\b");
         for (String line : lines) {
             Matcher matcher = pattern.matcher(line);
             while (matcher.find()) {
                 String word = matcher.group();
-                if (word.length() > longestWord.length()) {
-                    longestWord = word;
+                if (word.length() > palabraLarga.length()) {
+                    palabraLarga = word;
                 }
             }
         }
-        return longestWord;
+        return palabraLarga;
     }
 
     public static List<Chapter> parseChapters(List<String> lines) {
@@ -87,11 +87,11 @@ public class AliceToHtml {
         return chapters;
     }
 
-    public static void writeHtml(String filePath, List<Chapter> chapters, int numLines, String longestWord) {
+    public static void writeHtml(String filePath, List<Chapter> chapters, int numLines, String palabraLarga) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("<html>\n<head>\n<title>Parte tres</title>\n</head>\n<body>\n");
 
-            // Writing the index
+            // El indice de capitulos
             writer.write("<h1>Index</h1>\n<ul>\n");
             for (Chapter chapter : chapters) {
                 String chapterId = chapter.getTitle().replaceAll("\\s+", "_");
@@ -99,7 +99,7 @@ public class AliceToHtml {
             }
             writer.write("</ul>\n");
 
-            // Writing the chapters
+            // Ls capitulos
             for (Chapter chapter : chapters) {
                 String chapterId = chapter.getTitle().replaceAll("\\s+", "_");
                 writer.write(String.format("<h1 id=\"%s\">%s</h1>\n", chapterId, chapter.getTitle()));
@@ -108,9 +108,9 @@ public class AliceToHtml {
                 }
             }
 
-            // Writing the statistics
+            // Las estadisticas
             writer.write(String.format("<p>Numero de lineas: %d</p>\n", numLines));
-            writer.write(String.format("<p>Palabra mas larga: %s</p>\n", longestWord));
+            writer.write(String.format("<p>Palabra mas larga: %s</p>\n", palabraLarga));
 
             writer.write("</body>\n</html>\n");
         } catch (IOException e) {
@@ -119,6 +119,7 @@ public class AliceToHtml {
     }
 }
 
+// Clase Capitulo
 class Chapter {
     private String title;
     private List<String> lines;
